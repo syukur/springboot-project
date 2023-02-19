@@ -1,5 +1,7 @@
 package com.lylastudio.learn.model;
 
+import jakarta.persistence.Entity;
+
 import java.util.Objects;
 
 public class Customer {
