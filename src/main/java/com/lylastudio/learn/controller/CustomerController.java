@@ -3,7 +3,7 @@ package com.lylastudio.learn.controller;
 
 import com.lylastudio.learn.model.Customer;
 import com.lylastudio.learn.repository.CustomerRepository;
-import jakarta.annotation.PostConstruct;
+import com.lylastudio.learn.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,33 +12,36 @@ import java.util.List;
 @RequestMapping("customer")
 public class CustomerController {
 
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
-    public CustomerController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping
     List<Customer> getAllCustomer(){
-        return customerRepository.findAll();
+        return customerService.getALlCustomer();
     }
 
     @PostMapping
     public void addCustomer( @RequestBody Customer customer ){
-        customerRepository.save( customer );
+        customerService.addCustomer(customer);
     }
 
     @DeleteMapping( "{customerId}" )
     public void deleteCustomer(  @PathVariable("customerId") Integer customerId ){
-        customerRepository.deleteById( customerId );
+        //customerRepository.deleteById( customerId );
+        customerService.deleteCustomer(customerId);
     }
 
     @PutMapping
     public void updateCustomer( @RequestBody Customer customer ){
 
-       if( customerRepository.existsById( customer.getId() ) ){
-            customerRepository.save( customer );
-        }
+        customerService.updateCustomer(customer);
+
+//       if( customerRepository.existsById( customer.getId() ) ){
+//            customerRepository.save( customer );
+//        }
 
     }
 }
